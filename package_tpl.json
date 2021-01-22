@@ -1,0 +1,17 @@
+{
+  "name": "server_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "LINE_token=***** node index"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "link-check": "^4.5.4",
+    "node-cron": "^2.0.3",
+    "request": "^2.88.2"
+  }
+}

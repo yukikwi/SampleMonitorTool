@@ -1,5 +1,6 @@
 import { count } from 'console';
 import {execute} from '../library/exec.js'
+import LineNotify from '../library/line_notify.js'
 
 async function parameterExplode(){
     var diskSpaceRaw = await execute('df -h');
@@ -54,10 +55,21 @@ async function warning_list(warning_percentage){
     }
     return warn_list
 }
+
+async function notify(warn_list){
+    for(var data of warn_list){
+        var pretty_json_str = JSON.stringify(data, null, "\t")
+        pretty_json_str = pretty_json_str.replace("{\n","")
+        pretty_json_str = pretty_json_str.replace("}","")
+        await LineNotify(`Warning: Partition almost full!!\nDetail:\n`+pretty_json_str)
+    }
+}
+
 export const diskSpace = async function(){
     if(process.platform == 'darwin' || process.platform == 'linux'){
-        var spcae = await warning_list(80)
-        return spcae
+        var space = await warning_list(80)
+        notify(space)
+        return space
     }
     else{
         return `Sorry this module support only macos and linux at this moment 
